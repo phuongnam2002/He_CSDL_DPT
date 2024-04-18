@@ -42,7 +42,7 @@ def extract_spectral_centroid(file_path):
 def extract_spectral_rolloff(file_path):
     wave, sample_rate = librosa.load(file_path)
 
-    spectral_rolloff = librosa.feature.spectral_rolloff(y=wave + 0.01, sr=sample_rate)
+    spectral_rolloff = librosa.feature.spectral_rolloff(y=wave, sr=sample_rate)
 
     return spectral_rolloff
 

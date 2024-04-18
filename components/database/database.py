@@ -62,17 +62,8 @@ class Database:
 
         scores = cosine_scores_numpy(features, self.embeddings)
 
-        indexs = np.argsort(scores)[-top_k_results:][::-1]
+        indexs = np.argsort(scores)[0][::-1][:top_k_results]
 
         results = list(map(self.audios.__getitem__, indexs))
 
         return results
-
-
-if __name__ == '__main__':
-    database = Database(max_audio_length=400)
-    database.upload_vector_to_database()
-
-    audio_file = 'data/vietnamese/1.wav'
-
-    print(database.search_similarity_audio(audio_file))
