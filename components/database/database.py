@@ -14,11 +14,24 @@ def cosine_scores_numpy(compr, refer):
     return similarity
 
 
+def padding(x, max_audio_length):
+    if x.shape[1] > max_audio_length:
+        x = x[:, :max_audio_length]
+
+    padding_length = max_audio_length - x.shape[1]
+
+    padding = np.zeros((1, padding_length))
+
+    x = np.concatenate((x, padding), axis=1)
+
+    return x
+
+
 class Database:
-    def __init__(self):
+    def __init__(self, max_audio_length):
         self.audios = []
         self.embeddings = None
-        self.max_audio_size = 0
+        self.max_audio_length = max_audio_length
 
     def __len__(self):
         return len(self.embeddings)
@@ -33,34 +46,19 @@ class Database:
                 self.audios.append(file)
 
                 features = extractor(file)
-
-                self.max_audio_size = max(features.shape[1], self.max_audio_size)
+                features = padding(features, self.max_audio_length)
 
                 if self.embeddings is None:
                     self.embeddings = features
                 else:
-                    self.embeddings = np.append(
-                        self.embeddings, features
-                    )
-
-        print(len(self.embeddings))
-        for id in range(len(self.embeddings)):
-            padding_length = self.max_audio_size - self.embeddings[id].shape[1]
-
-            self.embeddings[id] = self.embeddings[id] + [0] * padding_length
+                    self.embeddings = np.append(self.embeddings, features, axis=0)
 
     def search_similarity_audio(self, audio_file, top_k_results=None):
         if top_k_results is None:
             top_k_results = 3
 
         features = extractor(audio_file)
-
-        if features.shape[1] > self.max_audio_size:
-            features.shape[1] = features.shape[1][:self.max_audio_size]
-        else:
-            padding_length = self.max_audio_size - features.shape[1]
-
-            features = features + [0] * padding_length
+        features = padding(features, self.max_audio_length)
 
         scores = cosine_scores_numpy(features, self.embeddings)
 
@@ -72,11 +70,9 @@ class Database:
 
 
 if __name__ == '__main__':
-    database = Database()
+    database = Database(max_audio_length=400)
     database.upload_vector_to_database()
 
-    file_path = '/home/namdp/csdl_dpt/data/vietnamese/1.wav'
+    audio_file = 'data/vietnamese/1.wav'
 
-    results = database.search_similarity_audio(file_path)
-
-    # print(results)
+    print(database.search_similarity_audio(audio_file))
