@@ -1,0 +1,8 @@
+{% if list_relevants %}
+<h2>Các File Audio Có Giọng Nói Tương Tự:</h2>
+<ul>
+    {% for relevant_file in list_relevants %}
+    <li><a href="{{ relevant_file.url }}">{{ relevant_file.name }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
