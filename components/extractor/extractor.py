@@ -11,7 +11,7 @@ def extract_mfcc(file_path):
     return mfcc
 
 
-def extract_chroma(file_path):
+def extract_stft(file_path):
     wave, sample_rate = librosa.load(file_path)
 
     chroma_gram = librosa.feature.chroma_stft(
@@ -53,12 +53,12 @@ def mean_pooling(x):
 
 def extractor(file_path):
     mfcc = extract_mfcc(file_path)
-    chroma = extract_chroma(file_path)
+    stft = extract_stft(file_path)
     rms = extract_rms(file_path)
     spectral_centroid = extract_spectral_centroid(file_path)
     rolloff = extract_spectral_rolloff(file_path)
 
-    features = np.concatenate((mfcc, chroma, rms, spectral_centroid, rolloff), axis=0)
+    features = np.concatenate((mfcc, stft, rms, spectral_centroid, rolloff), axis=0)
 
     features = minmax_scale(features, axis=1)
 
