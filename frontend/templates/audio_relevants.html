@@ -2,7 +2,11 @@
 <h2>Các File Audio Có Giọng Nói Tương Tự:</h2>
 <ul>
     {% for relevant_file in list_relevants %}
-    <li><a href="{{ relevant_file.url }}">{{ relevant_file.name }}</a></li>
+    <li>
+        <audio controls>
+            <source src="{{ relevant_file }}" type="audio/wav">
+        </audio>
+    </li>
     {% endfor %}
 </ul>
 {% endif %}
