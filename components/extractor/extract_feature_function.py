@@ -56,7 +56,6 @@ def chroma(
 def mfcc(
         y: Optional[np.ndarray] = None,
         sr: float = 22050,
-        n_mfcc: int = 20,
         dct_type: int = 2,
         norm: Optional[str] = "min_max",
 ) -> np.ndarray:
@@ -69,7 +68,6 @@ def mfcc(
 
 def chroma_stft(
         y: Optional[np.ndarray] = None,
-        sr: float = 22050,
         n_fft: int = 2048,
         n_chroma: int = 12,
 ) -> np.ndarray:
