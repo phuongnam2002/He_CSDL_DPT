@@ -58,7 +58,7 @@ def mfcc(
         sr: float = 22050,
         n_mfcc: int = 20,
         dct_type: int = 2,
-        norm: Optional[str] = "ortho",
+        norm: Optional[str] = "min_max",
 ) -> np.ndarray:
     y = melspectrogram(y=y, sr=sr)
 
