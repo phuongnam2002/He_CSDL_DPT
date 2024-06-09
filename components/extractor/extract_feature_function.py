@@ -87,7 +87,7 @@ def spectral_centroid(
 ) -> np.ndarray:
     freq = np.fft.rfftfreq(n=n_fft, d=1.0 / sr)
 
-    centroid = np.sum(freq * y, axis=-2, keepdims=True)
+    centroid = np.sum(freq * y, axis=-2, keepdims=True) / np.sum(y, axis=-2, keepdims=True)
     return centroid
 
 
