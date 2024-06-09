@@ -62,7 +62,7 @@ def mfcc(
 ) -> np.ndarray:
     y = melspectrogram(y=y, sr=sr)
 
-    MFCC = scipy.fftpack.dct(y, axis=-2, type=dct_type, norm=norm)[..., :n_mfcc, :]
+    MFCC = scipy.fftpack.dct(y, axis=-2, type=dct_type, norm=norm)
 
     return MFCC
 
