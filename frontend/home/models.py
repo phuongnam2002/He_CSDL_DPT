@@ -116,7 +116,7 @@ class Database:
         return len(self.embeddings)
 
     def upload_vector_to_database(self):
-        folders = glob(pathname='/home/namdp/csdl_dpt/data/*')
+        folders = glob(pathname='/home/black/csdl_dpt/data/*')
 
         for folder in folders:
             files = glob(pathname=f'{folder}/*.wav')

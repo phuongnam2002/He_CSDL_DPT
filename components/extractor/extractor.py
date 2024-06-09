@@ -2,23 +2,21 @@ import librosa
 import numpy as np
 from sklearn.preprocessing import minmax_scale
 
+from extract_feature_function import mfcc, chroma_stft, spectral_centroid, spectral_rolloff, rms
+
 
 def extract_mfcc(file_path):
     wave, sample_rate = librosa.load(file_path)
 
-    mfcc = librosa.feature.mfcc(y=wave, sr=sample_rate)
+    mfcc_array = mfcc(y=wave, sr=sample_rate)
 
-    return mfcc
+    return mfcc_array
 
 
 def extract_stft(file_path):
     wave, sample_rate = librosa.load(file_path)
 
-    chroma_gram = librosa.feature.chroma_stft(
-        y=wave,
-        sr=sample_rate,
-        hop_length=512
-    )
+    chroma_gram = chroma_stft(y=wave, sr=sample_rate)
 
     return chroma_gram
 
@@ -26,7 +24,7 @@ def extract_stft(file_path):
 def extract_rms(file_path):
     wave, sample_rate = librosa.load(file_path)
 
-    rms_values = librosa.feature.rms(y=wave)
+    rms_values = rms(y=wave)
 
     return rms_values
 
@@ -34,7 +32,7 @@ def extract_rms(file_path):
 def extract_spectral_centroid(file_path):
     wave, sample_rate = librosa.load(file_path)
 
-    centroids = librosa.feature.spectral_centroid(y=wave, sr=sample_rate)
+    centroids = spectral_centroid(y=wave, sr=sample_rate)
 
     return centroids
 
@@ -42,9 +40,9 @@ def extract_spectral_centroid(file_path):
 def extract_spectral_rolloff(file_path):
     wave, sample_rate = librosa.load(file_path)
 
-    spectral_rolloff = librosa.feature.spectral_rolloff(y=wave, sr=sample_rate)
+    spectral_rolloff_value = spectral_rolloff(y=wave, sr=sample_rate)
 
-    return spectral_rolloff
+    return spectral_rolloff_value
 
 
 def mean_pooling(x):

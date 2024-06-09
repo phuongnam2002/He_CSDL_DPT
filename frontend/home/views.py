@@ -13,7 +13,7 @@ def model_form_upload(request):
         form = forms.FileUploadModelForm(request.POST, request.FILES)
         if form.is_valid():
             file = form.save()
-            file_path = '/home/namdp/csdl_dpt/frontend' + file.file.url
+            file_path = '/home/black/csdl_dpt/frontend' + file.file.url
 
             if file_path.split('.')[-1] != 'wav':
                 file_path = convert_to_wav(file_path)
